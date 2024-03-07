@@ -1,5 +1,8 @@
 # Book my Event
-event booking REST API using Gin framework
+event booking REST API using
+- Gin Framework
+- PgSql (Sqlx + pgx)
+- JWT
 
 ## Current endpoints
 
