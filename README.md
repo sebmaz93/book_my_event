@@ -1,4 +1,5 @@
 # Book my Event
+event booking REST API using Gin framework
 
 ## Current endpoints
 
