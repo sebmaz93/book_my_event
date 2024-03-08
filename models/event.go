@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql"
 	"github.com/sebmaz93/book_my_event/db"
 	"time"
 )
@@ -24,7 +25,12 @@ func (e *Event) Save() error {
 	if err != nil {
 		return err
 	}
-	defer stmt.Close()
+	defer func(stmt *sql.Stmt) {
+		err := stmt.Close()
+		if err != nil {
+
+		}
+	}(stmt)
 
 	_, err = stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, e.UserID)
 	if err != nil {
@@ -48,13 +54,13 @@ func GetAllEvents() ([]Event, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
-	//defer func(rows *sql.Rows) {
-	//	err := rows.Close()
-	//	if err != nil {
-	//
-	//	}
-	//}(rows)
+
+	defer func(rows *sql.Rows) {
+		err := rows.Close()
+		if err != nil {
+
+		}
+	}(rows)
 
 	var events []Event
 	for rows.Next() {
@@ -92,7 +98,12 @@ func (e *Event) Update() error {
 		return err
 	}
 
-	defer stmt.Close()
+	defer func(stmt *sql.Stmt) {
+		err := stmt.Close()
+		if err != nil {
+
+		}
+	}(stmt)
 
 	_, err = stmt.Exec(e.Name, e.Description, e.Location, e.DateTime, e.ID)
 	return err
@@ -105,7 +116,12 @@ func (e *Event) Delete() error {
 		return err
 	}
 
-	defer stmt.Close()
+	defer func(stmt *sql.Stmt) {
+		err := stmt.Close()
+		if err != nil {
+
+		}
+	}(stmt)
 
 	_, err = stmt.Exec(e.ID)
 	return err
