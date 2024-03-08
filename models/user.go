@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"github.com/sebmaz93/book_my_event/db"
+	"github.com/sebmaz93/book_my_event/utils"
 )
 
 type User struct {
@@ -24,7 +25,12 @@ func (u *User) Save() error {
 		}
 	}(stmt)
 
-	_, err = stmt.Exec(u.Email, u.Password)
+	hashedPassword, err := utils.HashPassword(u.Password)
+	if err != nil {
+		return err
+	}
+
+	_, err = stmt.Exec(u.Email, hashedPassword)
 	if err != nil {
 		return err
 	}
